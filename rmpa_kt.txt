@@ -1,0 +1,30 @@
+eap prod - redshift, 
+ccsm prod - glue jobs , 
+rmpa prod - glue jobs
+
+
+FOR RMPA Related activities--
+(Redshift connection)
+db rmpa -rmpa_db
+username -> rmpa_user
+pw---> rMp@1234
+
+s3 bucket -- rmpa_prod_rawdata
+
+location of config files for 3tables ref to 8 point - s3://rmpa-prod-rawdata/config_files/rmpa_config_prod_3tables.py
+location of config files for 3tables ref to 4 points- s3://rmpa-prod-rawdata/config_files/rmpa_prod_config.py
+location of config files for 3tables ref to 9 points- s3://rmpa-prod-rawdata/config_files/materialized_view_config.py
+db redshift
+1. RMPA_Curated_to_s3_incremental_prod_Transaction-EAP  -- loading transaction tables (Sh_ordbook, sh_invoice)
+2. RMPA_Curated_to_s3_incremental_prod  --master tables loading
+3. rmpa_s3_to_redshift_prod-eap --to redshift data moving
+4  rmpa_s3_to_redshift_prod_Transaction-eap -- data moving of transaction
+5. RMPA_Stage_to_Transform_prod-eap  --master tables loading-----------?
+6.  RMPA_Stage_to_Transform_prod_Transaction-EAP --transaction tables loading---?
+7. fpay_data_lake_to_s3-eap --loading fpay tables (doubt)
+8. rmpa_s3_to_redshift_prod_Transaction_3tables-copy   --rmpa_config_prod_3tables(loading) [ 'fpay_empl' 'fpay_locn' , 'gm_desg']----?
+9. RMPA_MV__Refresh_prod-eap--Materialised view refresh 
+
+
+
+
